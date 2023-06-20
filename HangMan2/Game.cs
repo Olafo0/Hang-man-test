@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +12,13 @@ namespace HangMan2
     public class Game
     {
 
-        public string MainWord = "this is olaf";
+
+        public Game()
+        {
+            MainWord = apiword();
+        }
+
+        public string MainWord;
         public int lives = 6;
         
 
@@ -124,7 +130,7 @@ namespace HangMan2
             {
                 Console.WriteLine("CONSOLE: You've lost the game");
 
-                string msg = "Do you want to play again?";
+                string msg = "The correct word  " + MainWord + " .Do you want to play again?";
                 string title = "To win next time uninstall system32!";
                 MessageBoxButtons but = MessageBoxButtons.YesNo;
                 DialogResult result = MessageBox.Show(msg, title, but);
@@ -183,9 +189,22 @@ namespace HangMan2
             }
         }
 
+        public string apiword()
+        {
+            string downloadedString;
+            WebClient client;
+            client = new WebClient();
+            downloadedString = client.DownloadString("https://random-word-api.herokuapp.com/word");
+            Clean Word = new Clean(downloadedString);
+            Console.WriteLine(Word.word);
+            Word.word = Word.word.Replace("[", "");
+            Word.word = Word.word.Replace("]", "");
+            Word.word = Word.word.Replace("\"", "");
+
+            return Word.word;
+        }
+
 
 
     }
 }
-
-    
